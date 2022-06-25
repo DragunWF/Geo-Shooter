@@ -5,7 +5,7 @@ using UnityEngine.InputSystem;
 
 public class Player : MonoBehaviour
 {
-    private const float speed = 255.5f;
+    private const float speed = 155.5f;
     private Vector2 rawInput;
 
     private Rigidbody2D rigidBody;
@@ -25,8 +25,14 @@ public class Player : MonoBehaviour
         rawInput = value.Get<Vector2>();
     }
 
+    private void OnFire(InputValue value)
+    {
+
+    }
+
     private void Move()
     {
-        transform.Rotate(0, 0, rawInput.x * speed * Time.deltaTime);
+        float rotationSpeed = rawInput.x * speed * Time.deltaTime;
+        transform.Rotate(0, 0, rotationSpeed);
     }
 }
