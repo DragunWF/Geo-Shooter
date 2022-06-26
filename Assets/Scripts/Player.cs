@@ -1,12 +1,12 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.InputSystem;
 
 public class Player : MonoBehaviour
 {
-    private const float speed = 145.5f;
-    private Vector2 rawInput;
+    [SerializeField] float speed = 145.5f;
+    private Vector2 rawInputMovement;
+    private float rawInputFire;
 
     private Rigidbody2D rigidBody;
 
@@ -20,19 +20,8 @@ public class Player : MonoBehaviour
         Move();
     }
 
-    private void OnMove(InputValue value)
-    {
-        rawInput = value.Get<Vector2>();
-    }
-
-    private void OnFire(InputValue value)
-    {
-
-    }
-
     private void Move()
     {
-        float rotationSpeed = rawInput.x * speed * Time.deltaTime;
-        transform.Rotate(0, 0, rotationSpeed);
+
     }
 }

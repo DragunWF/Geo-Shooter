@@ -4,13 +4,14 @@ using UnityEngine;
 
 public class Bullet : MonoBehaviour
 {
-    // Start is called before the first frame update
+    private float speed = 12.5f;
+    private float startingRotation;
+
     void Start()
     {
-        
+        startingRotation = GameObject.Find("Player").transform.rotation.z;
     }
 
-    // Update is called once per frame
     void Update()
     {
         
