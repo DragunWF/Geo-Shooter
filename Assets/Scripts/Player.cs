@@ -4,24 +4,35 @@ using UnityEngine;
 
 public class Player : MonoBehaviour
 {
-    [SerializeField] float speed = 145.5f;
-    private Vector2 rawInputMovement;
-    private float rawInputFire;
-
+    private Camera mainCamera;
     private Rigidbody2D rigidBody;
+    private Vector2 mousePos;
 
     private void Awake()
     {
         rigidBody = FindObjectOfType<Rigidbody2D>();
+        mainCamera = FindObjectOfType<Camera>();
     }
 
     private void Update()
     {
-        Move();
+        AimTowardsMouse();
+        Shooting();
     }
 
-    private void Move()
+    private void Shooting()
     {
 
+    }
+
+    private void AimTowardsMouse()
+    {
+        mousePos = mainCamera.ScreenToWorldPoint(Input.mousePosition);
+        Vector2 lookDirection = mousePos - rigidBody.position;
+
+        float rotationOffset = 90;
+        float angle = Mathf.Atan2(lookDirection.y, lookDirection.x) * Mathf.Rad2Deg - rotationOffset;
+
+        rigidBody.rotation = angle;
     }
 }
