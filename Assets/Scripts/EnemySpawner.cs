@@ -4,27 +4,39 @@ using UnityEngine;
 
 public class EnemySpawner : MonoBehaviour
 {
-    private GameObject enemyPrefab;
     private List<Transform> spawnPoints;
+    private GameObject[] enemyPrefabs;
 
-    private float maxSpawnInterval = 12.5f;
-    private float minSpawnInterval = 6.25f;
+    private const float minSpawnIntervalLimit = 0.5f;
+    private const float maxSpawnIntervalLimit = 1f;
+    private float maxSpawnInterval = 8.5f;
+    private float minSpawnInterval = 4.25f;
 
     private void Awake()
     {
-        enemyPrefab = Resources.Load("Prefabs/Enemy") as GameObject;
+        enemyPrefabs = new GameObject[2] {
+            Resources.Load("Prefabs/Enemy [Square]") as GameObject,
+            Resources.Load("Prefabs/Enemy [Circle]") as GameObject
+        };
+        spawnPoints = new List<Transform>();
 
         const int pointIndexLimit = 8;
         for (int i = 0; i < pointIndexLimit; i++)
         {
-            GameObject point = GameObject.Find(string.Format("Point {0}", i));
+            GameObject point = GameObject.Find(string.Format("Point ({0})", i));
             spawnPoints.Add(point.transform);
         }
     }
 
     private void Start()
     {
+        SetSpawnIntervals();
+        StartCoroutine(SpawnEnemies());
+    }
 
+    private void SetSpawnIntervals()
+    {
+        // Add more code here
     }
 
     private float GetRandomSpawnInterval()
@@ -41,9 +53,18 @@ public class EnemySpawner : MonoBehaviour
         return spawnIntervals[Random.Range(0, spawnIntervals.Count - 1)];
     }
 
-    private IEnumerator SpawnEnemy()
+    private IEnumerator SpawnEnemies()
     {
-        float spawnInterval = GetRandomSpawnInterval();
-        yield return new WaitForSeconds(spawnInterval);
+        while (true)
+        {
+            GameObject chosenEnemy = enemyPrefabs[Random.Range(0, enemyPrefabs.Length - 1)];
+
+            float spawnInterval = GetRandomSpawnInterval() / 2;
+            yield return new WaitForSeconds(spawnInterval);
+
+            Vector2 chosenPosition = spawnPoints[Random.Range(0, spawnPoints.Count - 1)].position;
+            Instantiate(chosenEnemy, chosenPosition, Quaternion.identity);
+            yield return new WaitForSeconds(spawnInterval);
+        }
     }
 }
