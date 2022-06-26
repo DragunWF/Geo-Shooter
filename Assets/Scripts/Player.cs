@@ -59,9 +59,6 @@ public class Player : MonoBehaviour
             GameObject bullet = Instantiate(bulletPrefab, firePoint.position, firePoint.rotation);
             Rigidbody2D bulletRigidBody = bullet.GetComponent<Rigidbody2D>();
             bulletRigidBody.AddForce(firePoint.up * bulletForce, ForceMode2D.Impulse);
-
-            const float bulletDespawnTime = 3.5f;
-            Destroy(bullet, bulletDespawnTime);
         }
     }
 
