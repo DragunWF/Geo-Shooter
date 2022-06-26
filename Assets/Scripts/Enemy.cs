@@ -8,6 +8,9 @@ public class Enemy : MonoBehaviour
     [SerializeField] float moveSpeed = 0.5f;
     [SerializeField] bool isCircle = false;
 
+    private int minScoreGain = 25;
+    private int maxScoreGain = 50;
+
     private GameInfo gameInfo;
     private Player player;
 
@@ -36,10 +39,23 @@ public class Enemy : MonoBehaviour
             TakeDamage();
     }
 
+    private void SetStats()
+    {
+
+    }
+
     private void TakeDamage()
     {
         health -= player.BulletDamage;
         if (health <= 0)
-            Destroy(gameObject);
+            Death();
+
+    }
+
+    private void Death()
+    {
+        int scoreGain = Random.Range(minScoreGain, maxScoreGain);
+        gameInfo.IncreaseScore(scoreGain);
+        Destroy(gameObject);
     }
 }
