@@ -37,6 +37,8 @@ public class Enemy : MonoBehaviour
     {
         if (other.tag == "Bullet")
             TakeDamage();
+        if (other.tag == "Player")
+            Death(true);
     }
 
     private void SetStats()
@@ -48,14 +50,19 @@ public class Enemy : MonoBehaviour
     {
         health -= player.BulletDamage;
         if (health <= 0)
-            Death();
+            Death(false);
 
     }
 
-    private void Death()
+    private void Death(bool deathThroughPlayerCollision)
     {
-        int scoreGain = Random.Range(minScoreGain, maxScoreGain);
-        gameInfo.IncreaseScore(scoreGain);
-        Destroy(gameObject);
+        if (!deathThroughPlayerCollision)
+        {
+            int scoreGain = Random.Range(minScoreGain, maxScoreGain);
+            gameInfo.IncreaseScore(scoreGain);
+            Destroy(gameObject);
+        }
+        else
+            Destroy(gameObject);
     }
 }
