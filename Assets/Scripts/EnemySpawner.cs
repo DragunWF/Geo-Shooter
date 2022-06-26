@@ -26,9 +26,10 @@ public class EnemySpawner : MonoBehaviour
 
     private void Awake()
     {
-        enemyPrefabs = new GameObject[2] {
+        enemyPrefabs = new GameObject[3] {
             Resources.Load("Prefabs/Enemy [Square]") as GameObject,
-            Resources.Load("Prefabs/Enemy [Circle]") as GameObject
+            Resources.Load("Prefabs/Enemy [Circle]") as GameObject,
+            Resources.Load("Prefabs/Enemy [Triangle]") as GameObject
         };
         spawnPoints = new List<Transform>();
         gameUI = FindObjectOfType<GameUI>();
