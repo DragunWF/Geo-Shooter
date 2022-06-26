@@ -4,7 +4,10 @@ using UnityEngine;
 
 public class Enemy : MonoBehaviour
 {
-    private float moveSpeed = 0.5f;
+    [SerializeField] float health = 50;
+    [SerializeField] float moveSpeed = 0.5f;
+    [SerializeField] bool isCircle = false;
+
     private GameInfo gameInfo;
     private Player player;
 
