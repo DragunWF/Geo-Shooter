@@ -7,8 +7,14 @@ public class EnemySpawner : MonoBehaviour
     private List<Transform> spawnPoints;
     private GameObject[] enemyPrefabs;
 
-    private const float minSpawnIntervalLimit = 0.5f;
-    private const float maxSpawnIntervalLimit = 1f;
+    private const float scaleDifficultyTime = 10.5f;
+    private float[] initialSpawnIntervals;
+
+    private const int maxDifficultyLevel = 20;
+    private int difficultyLevel = 0;
+
+    private const float minSpawnIntervalLimit = 0.25f;
+    private const float maxSpawnIntervalLimit = 0.5f;
     private float maxSpawnInterval = 8.5f;
     private float minSpawnInterval = 4.25f;
 
@@ -26,17 +32,32 @@ public class EnemySpawner : MonoBehaviour
             GameObject point = GameObject.Find(string.Format("Point ({0})", i));
             spawnPoints.Add(point.transform);
         }
+
+        initialSpawnIntervals = new float[2] { minSpawnInterval, maxSpawnInterval };
     }
 
     private void Start()
     {
-        SetSpawnIntervals();
+        ScaleDifficulty();
         StartCoroutine(SpawnEnemies());
     }
 
-    private void SetSpawnIntervals()
+    private void ScaleDifficulty()
     {
-        // Add more code here
+        difficultyLevel++;
+
+        minSpawnInterval = initialSpawnIntervals[0] - difficultyLevel * 0.25f;
+        maxSpawnInterval = initialSpawnIntervals[1] - difficultyLevel * 0.25f;
+
+        if (minSpawnInterval > minSpawnIntervalLimit)
+            minSpawnInterval = minSpawnIntervalLimit;
+        if (maxSpawnInterval > maxSpawnIntervalLimit)
+            maxSpawnInterval = maxSpawnIntervalLimit;
+
+        // For testing purposes (Delete later)
+        Debug.Log(string.Format("MinSpawnInterval: {0} MaxSpawnInterval: {1}", minSpawnInterval, maxSpawnInterval));
+
+        Invoke("ScaleDifficulty", scaleDifficultyTime);
     }
 
     private float GetRandomSpawnInterval()
