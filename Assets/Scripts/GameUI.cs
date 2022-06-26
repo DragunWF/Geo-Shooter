@@ -8,6 +8,8 @@ public class GameUI : MonoBehaviour
 {
     private TextMeshProUGUI scoreText;
     private TextMeshProUGUI difficultyText;
+    private TextMeshProUGUI healthText;
+
     private EnemySpawner enemySpawner;
     private AudioPlayer audioPlayer;
 
@@ -27,30 +29,37 @@ public class GameUI : MonoBehaviour
             }
 
             formattedScore.Reverse();
-            scoreText.text = string.Join("", formattedScore);
+            scoreText.text = string.Format("Score: {0}", string.Join("", formattedScore));
         }
         else
-            scoreText.text = scoreAmount.ToString();
+            scoreText.text = string.Format("Score: {0}", scoreAmount);
     }
 
     public void UpdateDifficultyText(int difficultyLevel)
     {
         if (difficultyLevel == enemySpawner.GetMaxDifficultyLevel())
         {
-            difficultyText.text = "Max";
+            difficultyText.text = "Difficulty: Max";
             // Add sound effect
         }
         else
         {
-            difficultyText.text = difficultyLevel.ToString();
+            difficultyText.text = string.Format("Difficulty: {0}", difficultyLevel);
             // Add sound effect
         }
+    }
+
+    public void UpdateHealthText(int healthAmount)
+    {
+
     }
 
     private void Awake()
     {
         scoreText = GameObject.Find("ScoreText").GetComponent<TextMeshProUGUI>();
         difficultyText = GameObject.Find("DifficultyText").GetComponent<TextMeshProUGUI>();
+        healthText = GameObject.Find("HealthText").GetComponent<TextMeshProUGUI>();
+
         enemySpawner = FindObjectOfType<EnemySpawner>();
         audioPlayer = FindObjectOfType<AudioPlayer>();
     }
