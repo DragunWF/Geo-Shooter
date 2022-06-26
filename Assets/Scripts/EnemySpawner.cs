@@ -66,6 +66,7 @@ public class EnemySpawner : MonoBehaviour
         Debug.Log(string.Format("MinSpawnInterval: {0} MaxSpawnInterval: {1}", minSpawnInterval, maxSpawnInterval));
         Debug.Log(string.Format("Difficulty Level: {0}", difficultyLevel));
 
+        gameUI.UpdateDifficultyText(difficultyLevel);
         Invoke("ScaleDifficulty", scaleDifficultyTime);
     }
 
