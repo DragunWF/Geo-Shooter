@@ -51,7 +51,8 @@ public class GameUI : MonoBehaviour
 
     public void UpdateHealthText(int healthAmount)
     {
-
+        string formattedHealthValue = healthAmount > 0 ? healthAmount.ToString() : "Dead";
+        healthText.text = string.Format("Health: {0}", formattedHealthValue);
     }
 
     private void Awake()
