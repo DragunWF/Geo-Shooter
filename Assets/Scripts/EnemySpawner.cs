@@ -9,7 +9,6 @@ public class EnemySpawner : MonoBehaviour
 
     private float maxSpawnInterval = 12.5f;
     private float minSpawnInterval = 6.25f;
-    private float spawnInterval;
 
     private void Awake()
     {
@@ -23,13 +22,28 @@ public class EnemySpawner : MonoBehaviour
         }
     }
 
-    private void Update()
+    private void Start()
     {
 
     }
 
+    private float GetRandomSpawnInterval()
+    {
+        List<float> spawnIntervals = new List<float>();
+        float startInterval = minSpawnInterval;
+
+        while (startInterval < maxSpawnInterval)
+        {
+            startInterval += 0.1f;
+            spawnIntervals.Add(startInterval);
+        }
+
+        return spawnIntervals[Random.Range(0, spawnIntervals.Count - 1)];
+    }
+
     private IEnumerator SpawnEnemy()
     {
+        float spawnInterval = GetRandomSpawnInterval();
         yield return new WaitForSeconds(spawnInterval);
     }
 }
