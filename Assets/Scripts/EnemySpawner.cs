@@ -26,8 +26,8 @@ public class EnemySpawner : MonoBehaviour
         };
         spawnPoints = new List<Transform>();
 
-        const int pointIndexLimit = 8;
-        for (int i = 0; i < pointIndexLimit; i++)
+        const int pointIndexLimit = 15;
+        for (int i = 0; i <= pointIndexLimit; i++)
         {
             GameObject point = GameObject.Find(string.Format("Point ({0})", i));
             spawnPoints.Add(point.transform);
@@ -49,13 +49,14 @@ public class EnemySpawner : MonoBehaviour
         minSpawnInterval = initialSpawnIntervals[0] - difficultyLevel * 0.25f;
         maxSpawnInterval = initialSpawnIntervals[1] - difficultyLevel * 0.25f;
 
-        if (minSpawnInterval > minSpawnIntervalLimit)
+        if (minSpawnInterval < minSpawnIntervalLimit)
             minSpawnInterval = minSpawnIntervalLimit;
-        if (maxSpawnInterval > maxSpawnIntervalLimit)
+        if (maxSpawnInterval < maxSpawnIntervalLimit)
             maxSpawnInterval = maxSpawnIntervalLimit;
 
         // For testing purposes (Delete later)
         Debug.Log(string.Format("MinSpawnInterval: {0} MaxSpawnInterval: {1}", minSpawnInterval, maxSpawnInterval));
+        Debug.Log(string.Format("Difficulty Level: {0}", difficultyLevel));
 
         Invoke("ScaleDifficulty", scaleDifficultyTime);
     }
