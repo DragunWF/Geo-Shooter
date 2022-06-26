@@ -4,15 +4,16 @@ using UnityEngine;
 
 public class GameInfo : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
+    public int Score { get; private set; }
+    private string factionChosen;
+
+    private void Awake()
     {
-        
+        Score = 0;
     }
 
-    // Update is called once per frame
-    void Update()
+    private void Update()
     {
-        
+
     }
 }
