@@ -9,6 +9,7 @@ public class GameUI : MonoBehaviour
     private TextMeshProUGUI scoreText;
     private TextMeshProUGUI difficultyText;
     private EnemySpawner enemySpawner;
+    private AudioPlayer audioPlayer;
 
     public void UpdateDifficultyText(int difficultyLevel)
     {
@@ -32,9 +33,9 @@ public class GameUI : MonoBehaviour
 
         for (int i = 0; i < scoreTextArray.Length; i++)
         {
-            if (i + 1 % 3 == 0)
-                formattedScore.Add(',');
             formattedScore.Add(scoreTextArray[i]);
+            if ((i + 1) % 3 == 0 && i + 1 != scoreTextArray.Length)
+                formattedScore.Add(',');
         }
 
         formattedScore.Reverse();
@@ -46,5 +47,6 @@ public class GameUI : MonoBehaviour
         scoreText = GameObject.Find("ScoreText").GetComponent<TextMeshProUGUI>();
         difficultyText = GameObject.Find("DifficultyText").GetComponent<TextMeshProUGUI>();
         enemySpawner = FindObjectOfType<EnemySpawner>();
+        audioPlayer = FindObjectOfType<AudioPlayer>();
     }
 }
