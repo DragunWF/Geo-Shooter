@@ -1,18 +1,31 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
+    private const int mainMenuSceneIndex = 0;
+    private const int gameSceneIndex = 1;
+    private const int retryMenuSceneIndex = 2;
+
+    public void LoadMainMenuScene()
     {
-        
+        LoadScene(mainMenuSceneIndex);
     }
 
-    // Update is called once per frame
-    void Update()
+    public void LoadGameScene()
     {
-        
+        LoadScene(gameSceneIndex);
+    }
+
+    public void LoadRetryMenuScene()
+    {
+        LoadScene(retryMenuSceneIndex);
+    }
+
+    private void LoadScene(int sceneIndex)
+    {
+        SceneManager.LoadScene(sceneIndex);
     }
 }
