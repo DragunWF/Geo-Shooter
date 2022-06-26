@@ -21,6 +21,12 @@ public class Enemy : MonoBehaviour
     {
         Vector2 playerPos = new Vector2(0, 0);
         transform.position = Vector2.MoveTowards(transform.position, playerPos, moveSpeed * Time.deltaTime);
+
+        if (!isCircle)
+        {
+            float rotationSpeed = 85.5f * Time.deltaTime;
+            transform.Rotate(0, 0, rotationSpeed);
+        }
     }
 
     private void OnTriggerEnter2D(Collider2D other)
