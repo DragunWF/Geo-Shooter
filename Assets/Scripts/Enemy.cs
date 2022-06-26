@@ -19,7 +19,7 @@ public class Enemy : MonoBehaviour
 
     private void Update()
     {
-        Vector2 playerPos = player.GetPosition();
+        Vector2 playerPos = new Vector2(0, 0);
         transform.position = Vector2.MoveTowards(transform.position, playerPos, moveSpeed * Time.deltaTime);
     }
 
@@ -31,6 +31,8 @@ public class Enemy : MonoBehaviour
 
     private void TakeDamage()
     {
-
+        health -= player.BulletDamage;
+        if (health <= 0)
+            Destroy(gameObject);
     }
 }
