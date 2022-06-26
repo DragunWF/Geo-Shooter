@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 using TMPro;
 
 public class GameUI : MonoBehaviour
@@ -10,8 +11,12 @@ public class GameUI : MonoBehaviour
     private TextMeshProUGUI difficultyText;
     private TextMeshProUGUI healthText;
 
+    private TextMeshProUGUI levelText;
+    private Slider levelSlider;
+
     private EnemySpawner enemySpawner;
     private AudioPlayer audioPlayer;
+    private Player player;
 
     public void UpdateScoreText(int scoreAmount)
     {
@@ -55,13 +60,28 @@ public class GameUI : MonoBehaviour
         healthText.text = string.Format("Health: {0}", formattedHealthValue);
     }
 
+    public void UpdateLevelText(int level)
+    {
+        string formattedLevelValue = level != player.GetMaxLevel() ? level.ToString() : "Maxed";
+        levelText.text = string.Format("Level {0}", formattedLevelValue);
+    }
+
+    public void UpdateLevelSlider(int experiencePoints)
+    {
+
+    }
+
     private void Awake()
     {
         scoreText = GameObject.Find("ScoreText").GetComponent<TextMeshProUGUI>();
         difficultyText = GameObject.Find("DifficultyText").GetComponent<TextMeshProUGUI>();
         healthText = GameObject.Find("HealthText").GetComponent<TextMeshProUGUI>();
 
+        levelText = GameObject.Find("LevelText").GetComponent<TextMeshProUGUI>();
+        levelSlider = GameObject.Find("LevelSlider").GetComponent<Slider>();
+
         enemySpawner = FindObjectOfType<EnemySpawner>();
         audioPlayer = FindObjectOfType<AudioPlayer>();
+        player = FindObjectOfType<Player>();
     }
 }
