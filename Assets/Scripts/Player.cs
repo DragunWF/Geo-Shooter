@@ -69,7 +69,7 @@ public class Player : MonoBehaviour
     private IEnumerator Reloading()
     {
         isReloading = true;
-        yield return new WaitForSecondsRealtime(reloadTime);
+        yield return new WaitForSeconds(reloadTime);
         isReloading = false;
     }
 
