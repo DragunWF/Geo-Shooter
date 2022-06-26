@@ -6,16 +6,18 @@ public class Player : MonoBehaviour
 {
     public float BulletDamage { get; private set; }
 
+    private int healthPoints = 5;
+    private float reloadTime = 0.75f;
+    private bool isReloading = false;
+    private const float bulletForce = 22.5f;
+
     private Camera mainCamera;
     private Rigidbody2D rigidBody;
     private Vector2 mousePos;
 
     private Transform firePoint;
     private GameObject bulletPrefab;
-    private const float bulletForce = 22.5f;
-
-    private float reloadTime = 0.75f;
-    private bool isReloading = false;
+    private GameUI gameUI;
 
     public Vector2 GetPosition()
     {
@@ -26,10 +28,17 @@ public class Player : MonoBehaviour
     {
         BulletDamage = 25f;
 
-        rigidBody = GetComponent<Rigidbody2D>();
-        mainCamera = FindObjectOfType<Camera>();
         bulletPrefab = Resources.Load("Prefabs/Bullet") as GameObject;
         firePoint = GameObject.Find("FirePoint 1").transform;
+
+        rigidBody = GetComponent<Rigidbody2D>();
+        mainCamera = FindObjectOfType<Camera>();
+        gameUI = FindObjectOfType<GameUI>();
+    }
+
+    private void Start()
+    {
+        gameUI.UpdateHealthText(healthPoints);
     }
 
     private void Update()
@@ -74,6 +83,14 @@ public class Player : MonoBehaviour
     }
 
     private void TakeDamage()
+    {
+        healthPoints -= 1;
+        gameUI.UpdateHealthText(healthPoints);
+        if (healthPoints <= 0)
+            Death();
+    }
+
+    private void Death()
     {
 
     }
