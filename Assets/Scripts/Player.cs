@@ -4,17 +4,26 @@ using UnityEngine;
 
 public class Player : MonoBehaviour
 {
+    public float BulletDamage { get; private set; }
+
     private Camera mainCamera;
     private Rigidbody2D rigidBody;
     private Vector2 mousePos;
 
     private Transform firePoint;
     private GameObject bulletPrefab;
-    private float bulletForce = 22.5f;
+    private const float bulletForce = 22.5f;
+
+    public Vector2 GetPosition()
+    {
+        return transform.position;
+    }
 
     private void Awake()
     {
-        rigidBody = FindObjectOfType<Rigidbody2D>();
+        BulletDamage = 25f;
+
+        rigidBody = GetComponent<Rigidbody2D>();
         mainCamera = FindObjectOfType<Camera>();
         bulletPrefab = Resources.Load("Prefabs/Bullet") as GameObject;
         firePoint = GameObject.Find("FirePoint 1").transform;
@@ -24,6 +33,12 @@ public class Player : MonoBehaviour
     {
         AimTowardsMouse();
         Shooting();
+    }
+
+    private void OnTriggerEnter2D(Collider2D other)
+    {
+        if (other.tag == "Enemy")
+            TakeDamage();
     }
 
     private void AimTowardsMouse()
@@ -45,8 +60,13 @@ public class Player : MonoBehaviour
             Rigidbody2D bulletRigidBody = bullet.GetComponent<Rigidbody2D>();
             bulletRigidBody.AddForce(firePoint.up * bulletForce, ForceMode2D.Impulse);
 
-            const float bulletDespawnTime = 6.5f;
+            const float bulletDespawnTime = 3.5f;
             Destroy(bullet, bulletDespawnTime);
         }
+    }
+
+    private void TakeDamage()
+    {
+
     }
 }
