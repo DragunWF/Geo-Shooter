@@ -7,6 +7,10 @@ public class Player : MonoBehaviour
     public float BulletDamage { get; private set; }
 
     private int healthPoints = 5;
+    private int experiencePoints = 0;
+    private const int maxLevel = 10;
+    private int level = 1;
+
     private float reloadTime = 0.75f;
     private bool isReloading = false;
     private const float bulletForce = 22.5f;
@@ -19,10 +23,9 @@ public class Player : MonoBehaviour
     private GameObject bulletPrefab;
     private GameUI gameUI;
 
-    public Vector2 GetPosition()
-    {
-        return transform.position;
-    }
+    public int GetExperiencePoints() { return experiencePoints; }
+    public int GetMaxLevel() { return maxLevel; }
+    public Vector2 GetPosition() { return transform.position; }
 
     private void Awake()
     {
@@ -39,6 +42,7 @@ public class Player : MonoBehaviour
     private void Start()
     {
         gameUI.UpdateHealthText(healthPoints);
+        gameUI.UpdateLevelText(level);
     }
 
     private void Update()
