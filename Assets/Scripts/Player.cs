@@ -14,6 +14,9 @@ public class Player : MonoBehaviour
     private GameObject bulletPrefab;
     private const float bulletForce = 22.5f;
 
+    private float reloadTime = 0.75f;
+    private bool isReloading = false;
+
     public Vector2 GetPosition()
     {
         return transform.position;
@@ -54,12 +57,20 @@ public class Player : MonoBehaviour
 
     private void Shooting()
     {
-        if (Input.GetButtonDown("Fire1"))
+        if (Input.GetButton("Fire1") && !isReloading)
         {
             GameObject bullet = Instantiate(bulletPrefab, firePoint.position, firePoint.rotation);
             Rigidbody2D bulletRigidBody = bullet.GetComponent<Rigidbody2D>();
             bulletRigidBody.AddForce(firePoint.up * bulletForce, ForceMode2D.Impulse);
+            StartCoroutine(Reloading());
         }
+    }
+
+    private IEnumerator Reloading()
+    {
+        isReloading = true;
+        yield return new WaitForSecondsRealtime(reloadTime);
+        isReloading = false;
     }
 
     private void TakeDamage()
