@@ -20,7 +20,8 @@ public class Enemy : MonoBehaviour
     private void Update()
     {
         Vector2 playerPos = new Vector2(0, 0);
-        transform.position = Vector2.MoveTowards(transform.position, playerPos, moveSpeed * Time.deltaTime);
+        float relativeSpeed = moveSpeed * Time.deltaTime;
+        transform.position = Vector2.MoveTowards(transform.position, playerPos, relativeSpeed);
 
         if (!isCircle)
         {
