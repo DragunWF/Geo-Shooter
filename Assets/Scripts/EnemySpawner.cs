@@ -6,6 +6,7 @@ public class EnemySpawner : MonoBehaviour
 {
     private List<Transform> spawnPoints;
     private GameObject[] enemyPrefabs;
+    private GameUI gameUI;
 
     private const float scaleDifficultyTime = 10.5f;
     private float[] initialSpawnIntervals;
@@ -18,6 +19,11 @@ public class EnemySpawner : MonoBehaviour
     private float maxSpawnInterval = 8.5f;
     private float minSpawnInterval = 4.25f;
 
+    public int GetMaxDifficultyLevel()
+    {
+        return maxDifficultyLevel;
+    }
+
     private void Awake()
     {
         enemyPrefabs = new GameObject[2] {
@@ -25,6 +31,7 @@ public class EnemySpawner : MonoBehaviour
             Resources.Load("Prefabs/Enemy [Circle]") as GameObject
         };
         spawnPoints = new List<Transform>();
+        gameUI = FindObjectOfType<GameUI>();
 
         const int pointIndexLimit = 15;
         for (int i = 0; i <= pointIndexLimit; i++)
