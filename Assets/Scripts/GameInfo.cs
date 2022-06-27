@@ -11,6 +11,7 @@ public class GameInfo : MonoBehaviour
 
     private GameUI gameUI;
     private RetryMenuUI retryMenuUI;
+    static private GameInfo instance;
 
     public void IncreaseScore(int gainAmount)
     {
@@ -42,5 +43,21 @@ public class GameInfo : MonoBehaviour
 
         gameUI = FindObjectOfType<GameUI>();
         retryMenuUI = FindObjectOfType<RetryMenuUI>();
+
+        ManageSingleton();
+    }
+
+    private void ManageSingleton()
+    {
+        if (instance != null)
+        {
+            gameObject.SetActive(false);
+            Destroy(gameObject);
+        }
+        else
+        {
+            instance = this;
+            DontDestroyOnLoad(gameObject);
+        }
     }
 }
