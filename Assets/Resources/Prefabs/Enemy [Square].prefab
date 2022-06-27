@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 871187112197730443}
   - component: {fileID: 871187112197730440}
+  - component: {fileID: 1441731715763000394}
   - component: {fileID: 871187112197730441}
   - component: {fileID: 8616887348687861476}
   - component: {fileID: 5377808239858510264}
@@ -47,6 +48,22 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e67f0069337f27d49b759249bd2957de, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  health: 50
+  moveSpeed: 0.5
+  isCircle: 0
+--- !u!114 &1441731715763000394
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 871187112197730438}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 942d64a97f54c4d4d986a0f5ec03cf41, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  isUsingPlayer: 0
 --- !u!212 &871187112197730441
 SpriteRenderer:
   m_ObjectHideFlags: 0
