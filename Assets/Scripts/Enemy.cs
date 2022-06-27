@@ -23,6 +23,7 @@ public class Enemy : MonoBehaviour
 
     private EnemySpawner enemySpawner;
     private ParticlesPlayer particlesPlayer;
+    private AudioPlayer audioPlayer;
 
     private void Awake()
     {
@@ -31,6 +32,7 @@ public class Enemy : MonoBehaviour
 
         enemySpawner = FindObjectOfType<EnemySpawner>();
         particlesPlayer = FindObjectOfType<ParticlesPlayer>();
+        audioPlayer = FindObjectOfType<AudioPlayer>();
 
         flashEffect = GetComponent<FlashEffect>();
         DamageEffectDuration = 0.25f;
@@ -80,6 +82,7 @@ public class Enemy : MonoBehaviour
 
     private void TakeDamage()
     {
+        audioPlayer.PlayDamage();
         flashEffect.Flash();
         if (player != null)
         {

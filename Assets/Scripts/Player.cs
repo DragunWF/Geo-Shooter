@@ -27,6 +27,7 @@ public class Player : MonoBehaviour
     private GameObject bulletPrefab;
     private FlashEffect flashEffect;
 
+    private AudioPlayer audioPlayer;
     private GameUI gameUI;
     private GameInfo gameInfo;
 
@@ -55,6 +56,7 @@ public class Player : MonoBehaviour
 
         mainCamera = FindObjectOfType<Camera>();
         gameUI = FindObjectOfType<GameUI>();
+        audioPlayer = FindObjectOfType<AudioPlayer>();
     }
 
     private void Start()
@@ -109,6 +111,7 @@ public class Player : MonoBehaviour
     {
         if (Input.GetButton("Fire1") && !isReloading)
         {
+            audioPlayer.PlayShoot();
             GameObject bullet = Instantiate(bulletPrefab, firePoint.position, firePoint.rotation);
             Rigidbody2D bulletRigidBody = bullet.GetComponent<Rigidbody2D>();
             bulletRigidBody.AddForce(firePoint.up * bulletForce, ForceMode2D.Impulse);
@@ -147,6 +150,7 @@ public class Player : MonoBehaviour
         expToLevelUp = baseNum;
         UpdateStats();
 
+        audioPlayer.PlayUpgrade();
         gameUI.UpdateLevelText(level);
         gameUI.UpdateLevelSlider(expPoints, expToLevelUp);
 
@@ -160,6 +164,7 @@ public class Player : MonoBehaviour
     private void TakeDamage()
     {
         healthPoints -= 1;
+        audioPlayer.PlayDamage();
         gameUI.UpdateHealthText(healthPoints);
         flashEffect.Flash();
         if (healthPoints <= 0)
