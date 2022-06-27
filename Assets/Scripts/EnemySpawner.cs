@@ -81,7 +81,7 @@ public class EnemySpawner : MonoBehaviour
 
     private IEnumerator SpawnEnemies()
     {
-        const float timeDelayBeforeStart = 3.5f;
+        const float timeDelayBeforeStart = 2.25f;
         yield return new WaitForSeconds(timeDelayBeforeStart);
 
         while (true)
