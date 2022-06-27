@@ -4,9 +4,13 @@ using UnityEngine;
 
 public class Enemy : MonoBehaviour
 {
+    [Header("Enemy Attributes")]
     [SerializeField] float health = 50;
     [SerializeField] float moveSpeed = 0.5f;
     [SerializeField] bool isCircle = false;
+
+    public float DamageEffectDuration { get; private set; }
+    private float[] initialStats;
 
     private int minScoreGain = 25;
     private int maxScoreGain = 50;
@@ -16,14 +20,17 @@ public class Enemy : MonoBehaviour
     private GameInfo gameInfo;
     private Player player;
     private EnemySpawner enemySpawner;
-
-    private float[] initialStats;
+    private FlashEffect flashEffect;
 
     private void Awake()
     {
         gameInfo = FindObjectOfType<GameInfo>();
         player = FindObjectOfType<Player>();
         enemySpawner = FindObjectOfType<EnemySpawner>();
+
+        flashEffect = GetComponent<FlashEffect>();
+        DamageEffectDuration = 0.25f;
+
         initialStats = new float[2] { health, moveSpeed };
         SetStats();
     }
@@ -64,9 +71,9 @@ public class Enemy : MonoBehaviour
     private void TakeDamage()
     {
         health -= player.BulletDamage;
+        flashEffect.Flash();
         if (health <= 0)
             Death(false);
-
     }
 
     private void Death(bool deathThroughPlayerCollision)

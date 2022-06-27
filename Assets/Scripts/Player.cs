@@ -5,6 +5,7 @@ using UnityEngine;
 public class Player : MonoBehaviour
 {
     public int BulletDamage { get; private set; }
+    public float DamageEffectDuration { get; private set; }
 
     private int healthPoints = 1;
     private int expPoints;
@@ -24,7 +25,7 @@ public class Player : MonoBehaviour
     private Transform firePoint;
     private GameObject bulletPrefab;
     private GameUI gameUI;
-    private FadeToBlack fadeToBlackEffect;
+    private FlashEffect flashEffect;
 
     public int GetExperiencePoints() { return expPoints; }
     public int GetMaxLevel() { return maxLevel; }
@@ -40,15 +41,17 @@ public class Player : MonoBehaviour
 
     private void Awake()
     {
+        DamageEffectDuration = 1.5f;
         BulletDamage = 10;
 
         bulletPrefab = Resources.Load("Prefabs/Bullet") as GameObject;
         firePoint = GameObject.Find("FirePoint 1").transform;
 
         rigidBody = GetComponent<Rigidbody2D>();
+        flashEffect = GetComponent<FlashEffect>();
+
         mainCamera = FindObjectOfType<Camera>();
         gameUI = FindObjectOfType<GameUI>();
-        fadeToBlackEffect = FindObjectOfType<FadeToBlack>();
     }
 
     private void Start()
@@ -139,12 +142,13 @@ public class Player : MonoBehaviour
     {
         healthPoints -= 1;
         gameUI.UpdateHealthText(healthPoints);
+        flashEffect.Flash();
         if (healthPoints <= 0)
             Death();
     }
 
     private void Death()
     {
-
+        // FindObjectOfType<FadeToBlack>().InitializeFade();
     }
 }
