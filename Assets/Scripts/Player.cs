@@ -4,17 +4,18 @@ using UnityEngine;
 
 public class Player : MonoBehaviour
 {
-    public float BulletDamage { get; private set; }
+    public int BulletDamage { get; private set; }
 
-    private int healthPoints = 5;
+    private int healthPoints = 1;
     private int expPoints;
     private int expToLevelUp;
     private const int maxLevel = 10;
     private int level;
 
-    private float reloadTime = 0.75f;
+    private float reloadTime = 1.25f;
     private bool isReloading = false;
     private const float bulletForce = 22.5f;
+    private float[] initialStats;
 
     private Camera mainCamera;
     private Rigidbody2D rigidBody;
@@ -23,6 +24,7 @@ public class Player : MonoBehaviour
     private Transform firePoint;
     private GameObject bulletPrefab;
     private GameUI gameUI;
+    private FadeToBlack fadeToBlackEffect;
 
     public int GetExperiencePoints() { return expPoints; }
     public int GetMaxLevel() { return maxLevel; }
@@ -31,14 +33,14 @@ public class Player : MonoBehaviour
     public void GainExpPoints(int gainAmount)
     {
         expPoints += gainAmount;
-        if (expPoints >= expToLevelUp)
+        if (expPoints >= expToLevelUp && level < maxLevel)
             LevelUp();
         gameUI.UpdateLevelSlider(expPoints, expToLevelUp);
     }
 
     private void Awake()
     {
-        BulletDamage = 25f;
+        BulletDamage = 10;
 
         bulletPrefab = Resources.Load("Prefabs/Bullet") as GameObject;
         firePoint = GameObject.Find("FirePoint 1").transform;
@@ -46,11 +48,14 @@ public class Player : MonoBehaviour
         rigidBody = GetComponent<Rigidbody2D>();
         mainCamera = FindObjectOfType<Camera>();
         gameUI = FindObjectOfType<GameUI>();
+        fadeToBlackEffect = FindObjectOfType<FadeToBlack>();
     }
 
     private void Start()
     {
+        initialStats = new float[2] { BulletDamage, reloadTime };
         LevelUp();
+        UpdateStats();
         gameUI.UpdateHealthText(healthPoints);
         gameUI.UpdateLevelText(level);
     }
@@ -96,12 +101,21 @@ public class Player : MonoBehaviour
         isReloading = false;
     }
 
+    private void UpdateStats()
+    {
+        int initialBulletDamage = (int)initialStats[0];
+        float initialReloadTime = initialStats[1];
+
+        reloadTime = initialReloadTime - 0.11f * level;
+        BulletDamage = initialBulletDamage + 7 * level;
+    }
+
     private void LevelUp()
     {
         int nextLevel = level + 1;
         int baseNum = expToLevelUp;
 
-        while (nextLevel != level)
+        while (level != nextLevel)
         {
             baseNum++;
             nextLevel = (int)Mathf.Floor(Mathf.Log(baseNum, 2));
@@ -109,9 +123,16 @@ public class Player : MonoBehaviour
 
         level++;
         expToLevelUp = baseNum;
-        Debug.Log(string.Format("Exp: {0}, Until next lvl: {1}", expPoints, expToLevelUp));
+        UpdateStats();
+
         gameUI.UpdateLevelText(level);
         gameUI.UpdateLevelSlider(expPoints, expToLevelUp);
+
+        if (level > 1)
+        {
+            healthPoints++;
+            gameUI.UpdateHealthText(healthPoints);
+        }
     }
 
     private void TakeDamage()
