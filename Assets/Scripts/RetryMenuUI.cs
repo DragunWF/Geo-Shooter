@@ -23,7 +23,7 @@ public class RetryMenuUI : MonoBehaviour
         GameObject newHighScoreGameObject = newHighScoreText.gameObject;
         newHighScoreGameObject.SetActive(gameInfo.ReachedNewHighScore);
 
-        scoreText.text = string.Format("Score: {0}", gameInfo.Score);
-        highScoreText.text = string.Format("High Score: {0}", gameInfo.HighScore);
+        scoreText.text = string.Format("Score: {0}", GameUI.FormatNumber(gameInfo.Score));
+        highScoreText.text = string.Format("High Score: {0}", GameUI.FormatNumber(gameInfo.HighScore));
     }
 }

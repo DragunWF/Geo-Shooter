@@ -22,26 +22,32 @@ public class GameUI : MonoBehaviour
     private GameObject blueSpaceBackground;
     private GameObject redSpaceBackground;
 
-    public void UpdateScoreText(int scoreAmount)
+    public static string FormatNumber(int amount)
     {
-        if (scoreAmount >= 1000)
+        if (amount >= 1000)
         {
-            char[] scoreTextArray = scoreAmount.ToString().ToCharArray();
+            char[] textArray = amount.ToString().ToCharArray();
             List<char> formattedScore = new List<char>();
-            Array.Reverse(scoreTextArray);
+            Array.Reverse(textArray);
 
-            for (int i = 0; i < scoreTextArray.Length; i++)
+            for (int i = 0; i < textArray.Length; i++)
             {
-                formattedScore.Add(scoreTextArray[i]);
-                if ((i + 1) % 3 == 0 && i + 1 != scoreTextArray.Length)
+                formattedScore.Add(textArray[i]);
+                if ((i + 1) % 3 == 0 && i + 1 != textArray.Length)
                     formattedScore.Add(',');
             }
 
             formattedScore.Reverse();
-            scoreText.text = string.Format("Score: {0}", string.Join("", formattedScore));
+            return string.Join("", formattedScore);
         }
         else
-            scoreText.text = string.Format("Score: {0}", scoreAmount);
+            return amount.ToString();
+    }
+
+    public void UpdateScoreText(int scoreAmount)
+    {
+        string formattedValue = FormatNumber(scoreAmount);
+        scoreText.text = string.Format("Score: {0}", formattedValue);
     }
 
     public void UpdateDifficultyText(int difficultyLevel)
