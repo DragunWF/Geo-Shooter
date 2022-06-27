@@ -17,11 +17,15 @@ public class Enemy : MonoBehaviour
     private Player player;
     private EnemySpawner enemySpawner;
 
+    private float[] initialStats;
+
     private void Awake()
     {
         gameInfo = FindObjectOfType<GameInfo>();
         player = FindObjectOfType<Player>();
         enemySpawner = FindObjectOfType<EnemySpawner>();
+        initialStats = new float[2] { health, moveSpeed };
+        SetStats();
     }
 
     private void Update()
@@ -47,7 +51,14 @@ public class Enemy : MonoBehaviour
 
     private void SetStats()
     {
-
+        int difficultyLevel = enemySpawner.GetDifficultyLevel();
+        if (difficultyLevel > 1)
+        {
+            float initialHealth = initialStats[0];
+            float initialSpeed = initialStats[1];
+            health = initialHealth + 12 * difficultyLevel;
+            moveSpeed = initialSpeed + 0.025f * difficultyLevel;
+        }
     }
 
     private void TakeDamage()
@@ -64,8 +75,10 @@ public class Enemy : MonoBehaviour
         {
             int scoreGain = Random.Range(minScoreGain, maxScoreGain);
             int expGain = Random.Range(minExpGain, maxExpGain);
+
             player.GainExpPoints(expGain);
             gameInfo.IncreaseScore(scoreGain);
+
             Destroy(gameObject);
         }
         else
