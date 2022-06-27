@@ -8,7 +8,7 @@ public class EnemySpawner : MonoBehaviour
     private GameObject[] enemyPrefabs;
     private GameUI gameUI;
 
-    private const float scaleDifficultyTime = 10.5f;
+    private const float scaleDifficultyTime = 13.5f;
     private float[] initialSpawnIntervals;
 
     private const int maxDifficultyLevel = 20;
@@ -19,10 +19,8 @@ public class EnemySpawner : MonoBehaviour
     private float maxSpawnInterval = 8.5f;
     private float minSpawnInterval = 4.25f;
 
-    public int GetMaxDifficultyLevel()
-    {
-        return maxDifficultyLevel;
-    }
+    public int GetMaxDifficultyLevel() { return maxDifficultyLevel; }
+    public int GetDifficultyLevel() { return difficultyLevel; }
 
     private void Awake()
     {
@@ -54,20 +52,17 @@ public class EnemySpawner : MonoBehaviour
     {
         difficultyLevel++;
 
-        minSpawnInterval = initialSpawnIntervals[0] - difficultyLevel * 0.25f;
-        maxSpawnInterval = initialSpawnIntervals[1] - difficultyLevel * 0.25f;
+        minSpawnInterval = initialSpawnIntervals[0] - difficultyLevel * 0.75f;
+        maxSpawnInterval = initialSpawnIntervals[1] - difficultyLevel * 0.75f;
 
         if (minSpawnInterval < minSpawnIntervalLimit)
             minSpawnInterval = minSpawnIntervalLimit;
         if (maxSpawnInterval < maxSpawnIntervalLimit)
             maxSpawnInterval = maxSpawnIntervalLimit;
 
-        // For testing purposes (Delete later)
-        Debug.Log(string.Format("MinSpawnInterval: {0} MaxSpawnInterval: {1}", minSpawnInterval, maxSpawnInterval));
-        Debug.Log(string.Format("Difficulty Level: {0}", difficultyLevel));
-
         gameUI.UpdateDifficultyText(difficultyLevel);
-        Invoke("ScaleDifficulty", scaleDifficultyTime);
+        if (difficultyLevel < maxDifficultyLevel)
+            Invoke("ScaleDifficulty", scaleDifficultyTime);
     }
 
     private float GetRandomSpawnInterval()
@@ -86,6 +81,9 @@ public class EnemySpawner : MonoBehaviour
 
     private IEnumerator SpawnEnemies()
     {
+        const float timeDelayBeforeStart = 3.5f;
+        yield return new WaitForSeconds(timeDelayBeforeStart);
+
         while (true)
         {
             GameObject chosenEnemy = enemyPrefabs[Random.Range(0, enemyPrefabs.Length - 1)];
