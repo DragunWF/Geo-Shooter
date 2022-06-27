@@ -18,6 +18,10 @@ public class GameUI : MonoBehaviour
     private AudioPlayer audioPlayer;
     private Player player;
 
+    private GameInfo gameInfo;
+    private GameObject blueSpaceBackground;
+    private GameObject redSpaceBackground;
+
     public void UpdateScoreText(int scoreAmount)
     {
         if (scoreAmount >= 1000)
@@ -78,5 +82,20 @@ public class GameUI : MonoBehaviour
         enemySpawner = FindObjectOfType<EnemySpawner>();
         audioPlayer = FindObjectOfType<AudioPlayer>();
         player = FindObjectOfType<Player>();
+
+        gameInfo = FindObjectOfType<GameInfo>();
+        blueSpaceBackground = GameObject.Find("BlueSpaceTileMap");
+        redSpaceBackground = GameObject.Find("RedSpaceTileMap");
+
+        blueSpaceBackground.SetActive(false);
+        redSpaceBackground.SetActive(false);
+    }
+
+    private void Start()
+    {
+        if (gameInfo.FactionChosen == "RED")
+            redSpaceBackground.SetActive(true);
+        else
+            blueSpaceBackground.SetActive(true);
     }
 }
