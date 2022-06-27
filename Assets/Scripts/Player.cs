@@ -7,9 +7,10 @@ public class Player : MonoBehaviour
     public float BulletDamage { get; private set; }
 
     private int healthPoints = 5;
-    private int experiencePoints = 0;
+    private int expPoints;
+    private int expToLevelUp;
     private const int maxLevel = 10;
-    private int level = 1;
+    private int level;
 
     private float reloadTime = 0.75f;
     private bool isReloading = false;
@@ -23,9 +24,17 @@ public class Player : MonoBehaviour
     private GameObject bulletPrefab;
     private GameUI gameUI;
 
-    public int GetExperiencePoints() { return experiencePoints; }
+    public int GetExperiencePoints() { return expPoints; }
     public int GetMaxLevel() { return maxLevel; }
     public Vector2 GetPosition() { return transform.position; }
+
+    public void GainExpPoints(int gainAmount)
+    {
+        expPoints += gainAmount;
+        if (expPoints >= expToLevelUp)
+            LevelUp();
+        gameUI.UpdateLevelSlider(expPoints, expToLevelUp);
+    }
 
     private void Awake()
     {
@@ -41,6 +50,7 @@ public class Player : MonoBehaviour
 
     private void Start()
     {
+        LevelUp();
         gameUI.UpdateHealthText(healthPoints);
         gameUI.UpdateLevelText(level);
     }
@@ -84,6 +94,24 @@ public class Player : MonoBehaviour
         isReloading = true;
         yield return new WaitForSeconds(reloadTime);
         isReloading = false;
+    }
+
+    private void LevelUp()
+    {
+        int nextLevel = level + 1;
+        int baseNum = expToLevelUp;
+
+        while (nextLevel != level)
+        {
+            baseNum++;
+            nextLevel = (int)Mathf.Floor(Mathf.Log(baseNum, 2));
+        }
+
+        level++;
+        expToLevelUp = baseNum;
+        Debug.Log(string.Format("Exp: {0}, Until next lvl: {1}", expPoints, expToLevelUp));
+        gameUI.UpdateLevelText(level);
+        gameUI.UpdateLevelSlider(expPoints, expToLevelUp);
     }
 
     private void TakeDamage()
