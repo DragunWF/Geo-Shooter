@@ -149,6 +149,8 @@ public class Player : MonoBehaviour
 
     private void Death()
     {
-        // FindObjectOfType<FadeToBlack>().InitializeFade();
+        FindObjectOfType<GameInfo>().SaveScore();
+        FindObjectOfType<FadeToBlack>().InitializeFade();
+        Destroy(gameObject);
     }
 }
