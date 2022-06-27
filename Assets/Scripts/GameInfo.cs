@@ -13,6 +13,15 @@ public class GameInfo : MonoBehaviour
     private RetryMenuUI retryMenuUI;
     static private GameInfo instance;
 
+    public void ChooseRedFaction() { FactionChosen = "RED"; }
+    public void ChooseBlueFaction() { FactionChosen = "BLUE"; }
+
+    public void RedefineObjects()
+    {
+        gameUI = FindObjectOfType<GameUI>();
+        retryMenuUI = FindObjectOfType<RetryMenuUI>();
+    }
+
     public void IncreaseScore(int gainAmount)
     {
         Score += gainAmount;
@@ -41,9 +50,7 @@ public class GameInfo : MonoBehaviour
         FactionChosen = "";
         ReachedNewHighScore = false;
 
-        gameUI = FindObjectOfType<GameUI>();
-        retryMenuUI = FindObjectOfType<RetryMenuUI>();
-
+        RedefineObjects();
         ManageSingleton();
     }
 
