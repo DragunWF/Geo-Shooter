@@ -315,9 +315,9 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1786442595}
-        m_TargetAssemblyTypeName: GameInfo, Assembly-CSharp
-        m_MethodName: ChooseBlueFaction
+      - m_Target: {fileID: 1333246541}
+        m_TargetAssemblyTypeName: MainMenuUI, Assembly-CSharp
+        m_MethodName: OnBlueButtonClick
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -597,9 +597,9 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1786442595}
-        m_TargetAssemblyTypeName: GameInfo, Assembly-CSharp
-        m_MethodName: ChooseRedFaction
+      - m_Target: {fileID: 1333246541}
+        m_TargetAssemblyTypeName: MainMenuUI, Assembly-CSharp
+        m_MethodName: OnRedButtonClick
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -1751,17 +1751,6 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: a23af1b1257487a45878737de833d9bb, type: 3}
---- !u!114 &1786442595 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 7763406143076382086, guid: a23af1b1257487a45878737de833d9bb, type: 3}
-  m_PrefabInstance: {fileID: 1786442594}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2c7c40a20303aa54bbe86d5fdf79c933, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &1800495045
 GameObject:
   m_ObjectHideFlags: 0
