@@ -8,7 +8,7 @@ public class EnemySpawner : MonoBehaviour
     private GameObject[] enemyPrefabs;
     private GameUI gameUI;
 
-    private const float scaleDifficultyTime = 13.5f;
+    private const float scaleDifficultyTime = 18.5f;
     private float[] initialSpawnIntervals;
 
     private const int maxDifficultyLevel = 20;
@@ -52,8 +52,8 @@ public class EnemySpawner : MonoBehaviour
     {
         difficultyLevel++;
 
-        minSpawnInterval = initialSpawnIntervals[0] - difficultyLevel * 0.75f;
-        maxSpawnInterval = initialSpawnIntervals[1] - difficultyLevel * 0.75f;
+        minSpawnInterval = initialSpawnIntervals[0] - difficultyLevel * 0.45f;
+        maxSpawnInterval = initialSpawnIntervals[1] - difficultyLevel * 0.45f;
 
         if (minSpawnInterval < minSpawnIntervalLimit)
             minSpawnInterval = minSpawnIntervalLimit;
