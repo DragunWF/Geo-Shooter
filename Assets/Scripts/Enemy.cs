@@ -70,10 +70,13 @@ public class Enemy : MonoBehaviour
 
     private void TakeDamage()
     {
-        health -= player.BulletDamage;
         flashEffect.Flash();
-        if (health <= 0)
-            Death(false);
+        if (player != null)
+        {
+            health -= player.BulletDamage;
+            if (health <= 0)
+                Death(false);
+        }
     }
 
     private void Death(bool deathThroughPlayerCollision)
