@@ -24,8 +24,10 @@ public class Player : MonoBehaviour
 
     private Transform firePoint;
     private GameObject bulletPrefab;
-    private GameUI gameUI;
     private FlashEffect flashEffect;
+
+    private GameUI gameUI;
+    private GameInfo gameInfo;
 
     public int GetExperiencePoints() { return expPoints; }
     public int GetMaxLevel() { return maxLevel; }
@@ -33,7 +35,8 @@ public class Player : MonoBehaviour
 
     public void GainExpPoints(int gainAmount)
     {
-        expPoints += gainAmount;
+        int modifiedGainAmount = gameInfo.FactionChosen == "BLUE" ? gainAmount * 2 : gainAmount;
+        expPoints += modifiedGainAmount;
         if (expPoints >= expToLevelUp && level < maxLevel)
             LevelUp();
         gameUI.UpdateLevelSlider(expPoints, expToLevelUp);
@@ -56,9 +59,18 @@ public class Player : MonoBehaviour
 
     private void Start()
     {
+        gameInfo = FindObjectOfType<GameInfo>();
+        gameInfo.RedefineObjects();
         initialStats = new float[2] { BulletDamage, reloadTime };
+
+        if (gameInfo.FactionChosen == "RED")
+        {
+            healthPoints += 3;
+            level += 4;
+        }
         LevelUp();
         UpdateStats();
+
         gameUI.UpdateHealthText(healthPoints);
         gameUI.UpdateLevelText(level);
     }
@@ -149,7 +161,7 @@ public class Player : MonoBehaviour
 
     private void Death()
     {
-        FindObjectOfType<GameInfo>().SaveScore();
+        gameInfo.SaveScore();
         FindObjectOfType<FadeToBlack>().InitializeFade();
         Destroy(gameObject);
     }
