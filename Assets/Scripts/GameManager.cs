@@ -11,21 +11,25 @@ public class GameManager : MonoBehaviour
 
     public void LoadMainMenuScene()
     {
-        LoadScene(mainMenuSceneIndex);
+        StartCoroutine(LoadScene(mainMenuSceneIndex));
     }
 
     public void LoadGameScene()
     {
-        LoadScene(gameSceneIndex);
+        FindObjectOfType<GameInfo>().OnGameRestart();
+        StartCoroutine(LoadScene(gameSceneIndex));
     }
 
     public void LoadRetryMenuScene()
     {
-        LoadScene(retryMenuSceneIndex);
+        StartCoroutine(LoadScene(retryMenuSceneIndex));
     }
 
-    private void LoadScene(int sceneIndex)
+    private IEnumerator LoadScene(int sceneIndex)
     {
+        FindObjectOfType<AudioPlayer>().PlayClick();
+        const float loadSceneTimeDelay = 0.25f;
+        yield return new WaitForSeconds(loadSceneTimeDelay);
         SceneManager.LoadScene(sceneIndex);
     }
 }
