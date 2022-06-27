@@ -33,6 +33,12 @@ public class Enemy : MonoBehaviour
 
         initialStats = new float[2] { health, moveSpeed };
         SetStats();
+
+        SpriteRenderer spriteRenderer = GetComponent<SpriteRenderer>();
+        if (gameInfo.FactionChosen == "RED")
+            spriteRenderer.color = new Color32(107, 178, 238, 255);
+        else
+            spriteRenderer.color = new Color32(245, 75, 75, 255);
     }
 
     private void Update()

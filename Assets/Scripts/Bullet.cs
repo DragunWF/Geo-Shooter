@@ -9,6 +9,13 @@ public class Bullet : MonoBehaviour
 
     private void Awake()
     {
+        SpriteRenderer spriteRenderer = GetComponent<SpriteRenderer>();
+        GameInfo gameInfo = FindObjectOfType<GameInfo>();
+        if (gameInfo.FactionChosen == "RED")
+            spriteRenderer.color = new Color32(245, 75, 75, 255);
+        else
+            spriteRenderer.color = new Color32(107, 178, 238, 255);
+
         Destroy(gameObject, despawnTime);
     }
 

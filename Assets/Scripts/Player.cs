@@ -10,6 +10,7 @@ public class Player : MonoBehaviour
     private int healthPoints = 1;
     private int expPoints;
     private int expToLevelUp;
+    private int expGainModifier = 1;
     private const int maxLevel = 10;
     private int level;
 
@@ -35,8 +36,7 @@ public class Player : MonoBehaviour
 
     public void GainExpPoints(int gainAmount)
     {
-        int modifiedGainAmount = gameInfo.FactionChosen == "BLUE" ? gainAmount * 2 : gainAmount;
-        expPoints += modifiedGainAmount;
+        expPoints += gainAmount * expGainModifier;
         if (expPoints >= expToLevelUp && level < maxLevel)
             LevelUp();
         gameUI.UpdateLevelSlider(expPoints, expToLevelUp);
@@ -63,10 +63,17 @@ public class Player : MonoBehaviour
         gameInfo.RedefineObjects();
         initialStats = new float[2] { BulletDamage, reloadTime };
 
+        SpriteRenderer spriteRenderer = GetComponent<SpriteRenderer>();
         if (gameInfo.FactionChosen == "RED")
         {
+            spriteRenderer.color = new Color32(245, 75, 75, 255);
             healthPoints += 3;
             level += 4;
+        }
+        else
+        {
+            expGainModifier = 2;
+            spriteRenderer.color = new Color32(107, 178, 238, 255);
         }
         LevelUp();
         UpdateStats();
