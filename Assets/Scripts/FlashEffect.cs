@@ -14,6 +14,12 @@ public class FlashEffect : MonoBehaviour
     private Coroutine flashRoutine;
     private float effectDuration;
 
+    public void Flash()
+    {
+        flashRoutine = StartCoroutine(StartFlashEffect());
+        Invoke("StopFlash", effectDuration);
+    }
+
     private void Awake()
     {
         spriteRenderer = GetComponent<SpriteRenderer>();
@@ -21,16 +27,16 @@ public class FlashEffect : MonoBehaviour
 
     private void Start()
     {
+        const float defineTimeDelay = 0.05f;
+        Invoke("DefineComponents", defineTimeDelay);
+    }
+
+    private void DefineComponents()
+    {
         effectDuration = isUsingPlayer ?
                          GetComponent<Player>().DamageEffectDuration :
                          GetComponent<Enemy>().DamageEffectDuration;
         originalColor = spriteRenderer.color;
-    }
-
-    public void Flash()
-    {
-        flashRoutine = StartCoroutine(StartFlashEffect());
-        Invoke("StopFlash", effectDuration);
     }
 
     private void StopFlash()
