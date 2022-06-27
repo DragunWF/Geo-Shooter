@@ -43,15 +43,9 @@ public class GameUI : MonoBehaviour
     public void UpdateDifficultyText(int difficultyLevel)
     {
         if (difficultyLevel == enemySpawner.GetMaxDifficultyLevel())
-        {
             difficultyText.text = "Difficulty: Max";
-            // Add sound effect
-        }
         else
-        {
             difficultyText.text = string.Format("Difficulty: {0}", difficultyLevel);
-            // Add sound effect
-        }
     }
 
     public void UpdateHealthText(int healthAmount)
@@ -66,9 +60,10 @@ public class GameUI : MonoBehaviour
         levelText.text = string.Format("Level {0}", formattedLevelValue);
     }
 
-    public void UpdateLevelSlider(int experiencePoints)
+    public void UpdateLevelSlider(float fillValue, float maxValue)
     {
-
+        levelSlider.maxValue = maxValue;
+        levelSlider.value = fillValue;
     }
 
     private void Awake()
