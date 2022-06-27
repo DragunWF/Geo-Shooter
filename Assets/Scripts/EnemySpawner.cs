@@ -86,12 +86,12 @@ public class EnemySpawner : MonoBehaviour
 
         while (true)
         {
-            GameObject chosenEnemy = enemyPrefabs[Random.Range(0, enemyPrefabs.Length - 1)];
+            GameObject chosenEnemy = enemyPrefabs[Random.Range(0, enemyPrefabs.Length)];
 
             float spawnInterval = GetRandomSpawnInterval() / 2;
             yield return new WaitForSeconds(spawnInterval);
 
-            Vector2 chosenPosition = spawnPoints[Random.Range(0, spawnPoints.Count - 1)].position;
+            Vector2 chosenPosition = spawnPoints[Random.Range(0, spawnPoints.Count)].position;
             Instantiate(chosenEnemy, chosenPosition, Quaternion.identity);
             yield return new WaitForSeconds(spawnInterval);
         }
