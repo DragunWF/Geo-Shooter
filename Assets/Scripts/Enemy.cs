@@ -10,14 +10,18 @@ public class Enemy : MonoBehaviour
 
     private int minScoreGain = 25;
     private int maxScoreGain = 50;
+    private int minExpGain = 1;
+    private int maxExpGain = 2;
 
     private GameInfo gameInfo;
     private Player player;
+    private EnemySpawner enemySpawner;
 
     private void Awake()
     {
         gameInfo = FindObjectOfType<GameInfo>();
         player = FindObjectOfType<Player>();
+        enemySpawner = FindObjectOfType<EnemySpawner>();
     }
 
     private void Update()
@@ -59,6 +63,8 @@ public class Enemy : MonoBehaviour
         if (!deathThroughPlayerCollision)
         {
             int scoreGain = Random.Range(minScoreGain, maxScoreGain);
+            int expGain = Random.Range(minExpGain, maxExpGain);
+            player.GainExpPoints(expGain);
             gameInfo.IncreaseScore(scoreGain);
             Destroy(gameObject);
         }
