@@ -169,6 +169,7 @@ public class Player : MonoBehaviour
     private void Death()
     {
         gameInfo.SaveScore();
+        FindObjectOfType<ParticlesPlayer>().PlayDeathEffect(transform.position);
         FindObjectOfType<FadeToBlack>().InitializeFade();
         Destroy(gameObject);
     }

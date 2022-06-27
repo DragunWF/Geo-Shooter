@@ -19,14 +19,18 @@ public class Enemy : MonoBehaviour
 
     private GameInfo gameInfo;
     private Player player;
-    private EnemySpawner enemySpawner;
     private FlashEffect flashEffect;
+
+    private EnemySpawner enemySpawner;
+    private ParticlesPlayer particlesPlayer;
 
     private void Awake()
     {
         gameInfo = FindObjectOfType<GameInfo>();
         player = FindObjectOfType<Player>();
+
         enemySpawner = FindObjectOfType<EnemySpawner>();
+        particlesPlayer = FindObjectOfType<ParticlesPlayer>();
 
         flashEffect = GetComponent<FlashEffect>();
         DamageEffectDuration = 0.25f;
@@ -87,6 +91,7 @@ public class Enemy : MonoBehaviour
 
     private void Death(bool deathThroughPlayerCollision)
     {
+        particlesPlayer.PlayDeathEffect(transform.position);
         if (!deathThroughPlayerCollision)
         {
             int scoreGain = Random.Range(minScoreGain, maxScoreGain);

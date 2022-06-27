@@ -4,7 +4,6 @@ using UnityEngine;
 
 public class Bullet : MonoBehaviour
 {
-    private ParticleSystem hitEffect;
     private const float despawnTime = 3.5f;
 
     private void Awake()
@@ -22,6 +21,10 @@ public class Bullet : MonoBehaviour
     private void OnTriggerEnter2D(Collider2D other)
     {
         if (other.tag == "Enemy")
+        {
+            ParticlesPlayer particlesPlayer = FindObjectOfType<ParticlesPlayer>();
+            particlesPlayer.PlayHitEffect(transform.position);
             Destroy(gameObject);
+        }
     }
 }
