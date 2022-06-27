@@ -7,6 +7,17 @@ public class MainMenuUI : MonoBehaviour
     private GameObject titleMenu;
     private GameObject chooseMenu;
     private AudioPlayer audioPlayer;
+    private GameInfo gameInfo;
+
+    public void OnRedButtonClick()
+    {
+        gameInfo.ChooseRedFaction();
+    }
+
+    public void OnBlueButtonClick()
+    {
+        gameInfo.ChooseBlueFaction();
+    }
 
     public void OnPlayButtonClick()
     {
@@ -20,6 +31,7 @@ public class MainMenuUI : MonoBehaviour
         titleMenu = GameObject.Find("TitleMenu");
         chooseMenu = GameObject.Find("ChooseMenu");
         audioPlayer = FindObjectOfType<AudioPlayer>();
+        gameInfo = FindObjectOfType<GameInfo>();
         chooseMenu.SetActive(false);
     }
 }
